@@ -3,3 +3,95 @@
   padding: 0px;
   box-sizing: border-box;
 }
+:root {
+  --primary: #5cdb95;
+  --secondary: #05386b;
+}
+body {
+  background-color: var(--primary);
+}
+
+.app {
+  position: relative;
+}
+
+.header {
+  /* border: 1px solid; */
+  position: fixed;
+  width: 100%;
+  padding: 20px;
+  color: var(--secondary);
+  background-image: linear-gradient(to top left, #3bdc83, #05386b);
+}
+
+.header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+}
+
+.header nav .logo {
+  /* border: 1px solid; */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #edf5e5;
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.header nav .types-header {
+  display: flex;
+  gap: 30px;
+}
+
+.header nav .types-header span {
+  padding: 5px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  background-color: var(--secondary);
+}
+.header nav .types-header span:hover {
+  background-color: white;
+  transition: ease-in-out 0.7s;
+  color: var(--secondary);
+}
+
+.icon {
+  display: none;
+}
+
+/* https://visme.co/blog/website-color-schemes/ */
+
+@media (max-width: 486px) {
+  .header {
+    padding: 5px;
+  }
+  .header nav {
+    font-size: 16px;
+  }
+  .header nav .logo {
+    font-size: 20px;
+  }
+  /* .logo .logo-img {
+
+  }
+  
+    { width: 80px, borderRadius: 20px}
+   */
+
+  .header nav .types-header {
+    display: none;
+    gap: 5px;
+  }
+
+  .header nav .types-header-responsive {
+    display: block;
+  }
+
+  .icon {
+    display: block !important;
+  }
+}
