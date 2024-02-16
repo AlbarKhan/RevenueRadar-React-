@@ -16,7 +16,6 @@ body {
 }
 
 .header {
-  /* border: 1px solid; */
   position: fixed;
   width: 100%;
   padding: 20px;
@@ -32,13 +31,16 @@ body {
 }
 
 .header nav .logo {
-  /* border: 1px solid; */
   display: flex;
   align-items: center;
   gap: 15px;
   color: #edf5e5;
   font-weight: 700;
   font-size: 32px;
+}
+
+.header nav img {
+  width: 80px;
 }
 
 .header nav .types-header {
@@ -63,25 +65,21 @@ body {
   display: none;
 }
 
-/* https://visme.co/blog/website-color-schemes/ */
-
 @media (max-width: 486px) {
   .header {
     padding: 5px;
   }
   .header nav {
     font-size: 16px;
+    position: relative;
   }
   .header nav .logo {
     font-size: 20px;
   }
-  /* .logo .logo-img {
-
+  .header nav img {
+    width: 65px;
+    border-radius: 10px;
   }
-  
-    { width: 80px, borderRadius: 20px}
-   */
-
   .header nav .types-header {
     display: none;
     gap: 5px;
@@ -89,9 +87,25 @@ body {
 
   .header nav .types-header-responsive {
     display: block;
+    text-align: center;
+    width: 102%;
+    position: absolute;
+    top: 55px;
+    right: 0px;
+    background-color: var(--secondary);
+    color: white;
+  }
+  .header nav .types-header-responsive span {
+    display: block;
+    padding: 15px 10px;
+    border-bottom: 1px solid;
   }
 
   .icon {
     display: block !important;
+    color: white;
+    background-color: var(--secondary);
+    padding: 10px;
+    border-radius: 5px;
   }
 }
