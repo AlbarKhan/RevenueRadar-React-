@@ -8,15 +8,16 @@
   --secondary: #05386b;
 }
 body {
-  background-color: var(--primary);
 }
 
-.app {
+.App {
   position: relative;
+  height: 100vh;
+  background-image: linear-gradient(to top left, #05386b, #3bdc83);
 }
 
 .header {
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   padding: 20px;
   color: var(--secondary);
@@ -65,6 +66,64 @@ body {
   display: none;
 }
 
+.main-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.main-content {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  /* align-items: center; */
+  /* border: 1px solid; */
+  width: 75%;
+}
+
+.main-content .list {
+  width: 65%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.main-content .inputForm {
+  width: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+.main-content .inputForm .form {
+  /* border: 1px solid; */
+}
+.main-content .inputForm .form input {
+  width: 100%;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.table {
+  /* border: 1px solid; */
+  width: 100%;
+  /* background-color: var(--secondary); */
+  color: white;
+}
+
+.table th {
+  font-size: 20px;
+  padding: 10px 5px;
+  border: 1px solid;
+  /* width: 33.3%; */
+}
+.table .date-column {
+  width: 20%;
+}
+.table .name-column {
+  width: 50%;
+}
+.table .amount-column {
+}
 @media (max-width: 486px) {
   .header {
     padding: 5px;
@@ -107,5 +166,18 @@ body {
     background-color: var(--secondary);
     padding: 10px;
     border-radius: 5px;
+  }
+
+  .main-content {
+    flex-direction: column-reverse;
+    justify-content: start;
+    width: 95%;
+  }
+  .main-content .list {
+    width: 100%;
+  }
+
+  .main-content .inputForm {
+    width: 100%;
   }
 }
