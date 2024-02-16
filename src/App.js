@@ -1,5 +1,28 @@
 import { useState } from "react";
 
+const data = [
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+  { username: "Albar Khan", date: "23-02-24", amount: [786000] },
+];
 export default function App() {
   return (
     <div className="App">
@@ -44,6 +67,7 @@ function Body() {
     <div className="main-wrapper">
       <div className="main-content">
         <div className="list">
+          <DateBar />
           <Table />
         </div>
         <div className="inputForm">
@@ -66,6 +90,24 @@ function Form() {
   );
 }
 
+function DateBar() {
+  return (
+    <div className="date-bar">
+      <div className="select-options">
+        <select>
+          <option>Year</option>
+        </select>
+        <select>
+          <option>month</option>
+        </select>
+      </div>
+      <div>
+        <span className="status">January 2024 : $898989898989</span>
+      </div>
+    </div>
+  );
+}
+
 function Table() {
   return (
     <table className="table">
@@ -76,6 +118,15 @@ function Table() {
           <th className="amount-column">Amount</th>
         </tr>
       </thead>
+      <tbody>
+        {data.map((data) => (
+          <tr key={data.username}>
+            <td>{data.date}</td>
+            <td>Albar Khan</td>
+            <td>₹{data.amount}</td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 }

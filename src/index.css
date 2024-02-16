@@ -12,7 +12,7 @@ body {
 
 .App {
   position: relative;
-  height: 100vh;
+  /* height: 100vh; */
   background-image: linear-gradient(to top left, #05386b, #3bdc83);
 }
 
@@ -76,13 +76,40 @@ body {
   display: flex;
   justify-content: center;
   gap: 20px;
-  /* align-items: center; */
-  /* border: 1px solid; */
   width: 75%;
+}
+.date-bar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid; */
+  padding: 10px 10px;
+}
+.date-bar .select-options {
+  /* border: 1px solid; */
+}
+.date-bar select {
+  padding: 5px 10px;
+  /* margin-top: 20px; */
+  /* margin: 0px 20px 0px; */
+  margin-right: 20px;
+  border-radius: 10px;
+  /* background-color: var(--secondary); */
+  /* color: white; */
+}
+
+.date-bar .status {
+  /* border: 1px solid; */
+  font-size: 20px;
+  margin-left: 5px;
+  color: white;
 }
 
 .main-content .list {
   width: 65%;
+  height: 740px;
+  overflow: scroll;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -104,17 +131,23 @@ body {
   margin-top: 20px;
 }
 .table {
-  /* border: 1px solid; */
   width: 100%;
-  /* background-color: var(--secondary); */
   color: white;
 }
 
 .table th {
   font-size: 20px;
   padding: 10px 5px;
-  border: 1px solid;
+  border: 1px solid white;
+  color: var(--secondary);
   /* width: 33.3%; */
+}
+.table td {
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  text-align: center;
+  padding: 10px 0px;
+  font-size: 18px;
 }
 .table .date-column {
   width: 20%;
@@ -123,6 +156,7 @@ body {
   width: 50%;
 }
 .table .amount-column {
+  width: 30%;
 }
 @media (max-width: 486px) {
   .header {
@@ -172,6 +206,11 @@ body {
     flex-direction: column-reverse;
     justify-content: start;
     width: 95%;
+  }
+  .date-bar {
+    flex-direction: column-reverse;
+    align-items: start;
+    gap: 20px;
   }
   .main-content .list {
     width: 100%;
