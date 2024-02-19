@@ -108,13 +108,13 @@ body {
 
 .main-content .list {
   width: 65%;
-  height: 740px;
-  overflow: scroll;
+  /* height: 740px; */
+  /* overflow: scroll; */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.main-content .inputForm {
+.main-conent .inputForm {
   width: 50%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
   background-color: rgba(0, 0, 0, 0.1);
@@ -149,6 +149,10 @@ body {
   padding: 10px 0px;
   font-size: 18px;
 }
+.table-parent {
+  height: 672px;
+  overflow: scroll;
+}
 .table .date-column {
   width: 20%;
 }
@@ -158,7 +162,7 @@ body {
 .table .amount-column {
   width: 30%;
 }
-@media (max-width: 486px) {
+@media (max-width: 786px) {
   .header {
     padding: 5px;
   }
