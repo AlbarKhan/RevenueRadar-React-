@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import { useState } from "react";
 
 //ignore prettier
@@ -22,6 +23,7 @@ const data = [
     date: "1",
     month: "March",
     year: 2024,
+    type: "sales",
     amount: 786000,
   },
   {
@@ -29,26 +31,37 @@ const data = [
     date: "2",
     month: "March",
     year: 2024,
+    type: "purchase",
+    amount: 786000,
+  },
+  {
+    username: "Habib",
+    date: "2",
+    month: "March",
+    year: 2024,
+    type: "purchase",
     amount: 786000,
   },
   {
     username: "Albar Khan",
     date: "2",
     month: "March",
+    type: "purchase",
     year: 2023,
     amount: 786000,
   },
 ];
 export default function App() {
+  const [type, setType] = useState("");
   return (
     <div className="App">
-      <Header />
-      <Body />
+      <Header setType={setType} />
+      <Body type={type} setType={setType} />
     </div>
   );
 }
 
-function Header() {
+function Header({ setType }) {
   const [responsive, setResponsive] = useState(false);
   return (
     <header className="header">
@@ -64,8 +77,20 @@ function Header() {
         <div
           className={!responsive ? "types-header" : "types-header-responsive"}
         >
-          <span>Slaes</span>
-          <span>Purchaes</span>
+          <span
+            onClick={(e) => {
+              setType("sales");
+            }}
+          >
+            sales
+          </span>
+          <span
+            onClick={(e) => {
+              setType("purchase");
+            }}
+          >
+            purchase
+          </span>
         </div>
         <span className="icon">
           <i
@@ -78,7 +103,7 @@ function Header() {
   );
 }
 
-function Body() {
+function Body({ type, setType }) {
   const [copydata, setCopyData] = useState(data);
   const [selectyear, setSelectYear] = useState(2024);
   const [selectMonth, setSelectMonth] = useState("March");
@@ -92,22 +117,29 @@ function Body() {
             selectMonth={selectMonth}
             selectYear={selectyear}
             copyData={copydata}
+            type={type}
           />
           <Table
             selectYear={selectyear}
             selectMonth={selectMonth}
             copyData={copydata}
+            type={type}
           />
         </div>
         <div className="inputForm">
-          <Form copydata={copydata} setCopyData={setCopyData} />
+          <Form
+            copydata={copydata}
+            setCopyData={setCopyData}
+            type={type}
+            setType={setType}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-function Form({ copyData, setCopyData }) {
+function Form({ copyData, setCopyData, type, setType }) {
   const [username, setName] = useState("");
   const [date, setdate] = useState("");
   const [month, setmonth] = useState("");
@@ -129,11 +161,19 @@ function Form({ copyData, setCopyData }) {
     }
 
     // console.log(String(months[month - 1]));
-    const newEntry = { username, date, month: months[month - 1], year, amount };
+    const newEntry = {
+      username,
+      date,
+      month: months[month - 1],
+      year,
+      amount,
+      type,
+    };
 
     // data.push(newEntry);
     setCopyData((copyData) => [...copyData, newEntry]);
-    console.log(copyData);
+    setName("");
+    setAmount(0);
   }
   // console.log(typeof month);
   function getCurrentDate() {
@@ -178,6 +218,13 @@ function Form({ copyData, setCopyData }) {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         ></input>
+        <select
+          className="select-option"
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option>sales</option>
+          <option>purchase</option>
+        </select>
         <button
           className="submit-btn"
           type="submit"
@@ -198,18 +245,37 @@ function DateBar({
   copyData,
   selectMonth,
   selectYear,
+  type,
 }) {
   let years = new Set();
   copyData.forEach((element) => {
     years.add(element.year);
   });
+
+  let summonth = 0;
+  let sumyear = 0;
+  copyData.forEach((data, index) => {
+    if (
+      data.year === selectYear &&
+      data.month === selectMonth &&
+      data.type === type
+    ) {
+      summonth += Number(data.amount);
+    }
+  });
+  copyData.forEach((data, index) => {
+    if (data.year === selectYear && data.type === type) {
+      sumyear += Number(data.amount);
+    }
+  });
+
   // console.log(years);
   return (
     <div className="date-bar">
       <div className="select-options">
         <select onChange={(e) => setSelectYear(Number(e.target.value))}>
           {[...years].map((year, index) => (
-            <option>{year}</option>
+            <option key={index}>{year}</option>
           ))}
         </select>
         <select
@@ -217,20 +283,23 @@ function DateBar({
           onChange={(e) => setSelectMonth(e.target.value)}
         >
           {months.map((month, index) => (
-            <option>{month}</option>
+            <option key={index}>{month}</option>
           ))}
         </select>
       </div>
       <div>
         <span className="status">
-          {selectMonth} {selectYear} : $898989898989
+          {selectYear} : {sumyear}
+        </span>
+        <span className="status">
+          {selectMonth} {selectYear} : ${summonth}
         </span>
       </div>
     </div>
   );
 }
 
-function Table({ selectYear, selectMonth, copyData }) {
+function Table({ selectYear, selectMonth, copyData, type }) {
   return (
     <div className="table-parent">
       <table className="table">
@@ -243,7 +312,9 @@ function Table({ selectYear, selectMonth, copyData }) {
         </thead>
         <tbody className="table-body">
           {copyData.map((data, index) =>
-            data.year === selectYear && data.month === selectMonth ? (
+            data.year === selectYear &&
+            data.month === selectMonth &&
+            data.type === type ? (
               <tr key={index}>
                 <td>{data.date}</td>
                 <td>{data.username}</td>
