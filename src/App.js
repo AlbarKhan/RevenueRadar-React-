@@ -15,28 +15,29 @@ const months = [
   "November",
   "December",
 ];
+
 const data = [
-  { username: "Albar Khan", date: "23", year: 2024, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2024, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2024, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2024, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2024, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2021, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2021, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2021, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2022, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2023, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2023, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2023, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2023, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2023, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2023, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2021, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2023, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2022, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2022, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2022, amount: 786000 },
-  { username: "Albar Khan", date: "23", year: 2021, amount: 786000 },
+  {
+    username: "Albar Khan",
+    date: "1",
+    month: "March",
+    year: 2024,
+    amount: 786000,
+  },
+  {
+    username: "Sufiyan shaikh",
+    date: "2",
+    month: "March",
+    year: 2024,
+    amount: 786000,
+  },
+  {
+    username: "Albar Khan",
+    date: "2",
+    month: "March",
+    year: 2023,
+    amount: 786000,
+  },
 ];
 export default function App() {
   return (
@@ -78,25 +79,63 @@ function Header() {
 }
 
 function Body() {
+  const [copydata, setCopyData] = useState(data);
+  const [selectyear, setSelectYear] = useState(2024);
+  const [selectMonth, setSelectMonth] = useState("March");
   return (
     <div className="main-wrapper">
       <div className="main-content">
         <div className="list">
-          <DateBar />
-          <Table />
+          <DateBar
+            setSelectYear={setSelectYear}
+            setSelectMonth={setSelectMonth}
+            selectMonth={selectMonth}
+            selectYear={selectyear}
+            copyData={copydata}
+          />
+          <Table
+            selectYear={selectyear}
+            selectMonth={selectMonth}
+            copyData={copydata}
+          />
         </div>
         <div className="inputForm">
-          <Form />
+          <Form copydata={copydata} setCopyData={setCopyData} />
         </div>
       </div>
     </div>
   );
 }
 
-function Form() {
-  const [name, setName] = useState("");
-  const [date, setDate] = useState("");
+function Form({ copyData, setCopyData }) {
+  const [username, setName] = useState("");
+  const [date, setdate] = useState("");
+  const [month, setmonth] = useState("");
+  const [year, setyear] = useState("");
+  const [amount, setAmount] = useState(0);
 
+  function hanldeDateChange(e) {
+    const selectedDate = new Date(e.target.value);
+    setdate(selectedDate.getDate());
+    setmonth(selectedDate.getMonth() + 1);
+    setyear(selectedDate.getFullYear());
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!username || !date || !month || !year || !amount) {
+      alert("invalid input");
+      return;
+    }
+
+    // console.log(String(months[month - 1]));
+    const newEntry = { username, date, month: months[month - 1], year, amount };
+
+    // data.push(newEntry);
+    setCopyData((copyData) => [...copyData, newEntry]);
+    console.log(copyData);
+  }
+  // console.log(typeof month);
   function getCurrentDate() {
     const today = new Date();
     let dd = today.getDate();
@@ -120,7 +159,7 @@ function Form() {
         <input
           className="name"
           placeholder="Name"
-          value={name}
+          value={username}
           onChange={(e) => setName(e.target.value)}
         ></input>
         <input
@@ -128,42 +167,70 @@ function Form() {
           className="name"
           placeholder="Name"
           min={getCurrentDate()}
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => {
+            hanldeDateChange(e);
+          }}
         ></input>
-        <input type="number" className="name" placeholder="Amount "></input>
+        <input
+          type="number"
+          className="name"
+          placeholder="Amount "
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        ></input>
+        <button
+          className="submit-btn"
+          type="submit"
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );
 }
 
-function DateBar() {
+function DateBar({
+  setSelectYear,
+  setSelectMonth,
+  copyData,
+  selectMonth,
+  selectYear,
+}) {
   let years = new Set();
-  data.forEach((element) => {
+  copyData.forEach((element) => {
     years.add(element.year);
   });
   // console.log(years);
   return (
     <div className="date-bar">
       <div className="select-options">
-        <select>
+        <select onChange={(e) => setSelectYear(Number(e.target.value))}>
           {[...years].map((year, index) => (
-            <option key={index}>{year}</option>
+            <option>{year}</option>
           ))}
         </select>
-        <select>
+        <select
+          value={selectMonth}
+          onChange={(e) => setSelectMonth(e.target.value)}
+        >
           {months.map((month, index) => (
             <option>{month}</option>
           ))}
         </select>
       </div>
       <div>
-        <span className="status">January 2024 : $898989898989</span>
+        <span className="status">
+          {selectMonth} {selectYear} : $898989898989
+        </span>
       </div>
     </div>
   );
 }
 
-function Table() {
+function Table({ selectYear, selectMonth, copyData }) {
   return (
     <div className="table-parent">
       <table className="table">
@@ -175,13 +242,17 @@ function Table() {
           </tr>
         </thead>
         <tbody className="table-body">
-          {data.map((data, index) => (
-            <tr key={index}>
-              <td>{data.date}</td>
-              <td>Albar Khan</td>
-              <td>₹{data.amount}</td>
-            </tr>
-          ))}
+          {copyData.map((data, index) =>
+            data.year === selectYear && data.month === selectMonth ? (
+              <tr key={index}>
+                <td>{data.date}</td>
+                <td>{data.username}</td>
+                <td>₹{data.amount}</td>
+              </tr>
+            ) : (
+              ""
+            )
+          )}
         </tbody>
       </table>
     </div>
