@@ -106,6 +106,13 @@ body {
   color: white;
 }
 
+.date-bar .total-amount {
+  /* border: 2px solid; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .main-content .list {
   width: 65%;
   /* height: 740px; */
@@ -163,13 +170,13 @@ body {
   overflow: scroll;
 }
 .table .date-column {
-  width: 20%;
+  width: 10%;
 }
 .table .name-column {
-  width: 50%;
+  width: 55%;
 }
 .table .amount-column {
-  width: 30%;
+  width: 35%;
 }
 .submit-btn {
   margin-top: 10px;

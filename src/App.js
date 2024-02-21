@@ -1,4 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
 import { useState } from "react";
 
 //ignore prettier
@@ -51,47 +50,26 @@ const data = [
     amount: 786000,
   },
 ];
+
 export default function App() {
   const [type, setType] = useState("");
   return (
     <div className="App">
-      <Header setType={setType} />
+      <Header setType={setType}>
+        <Logo />
+        <ConversionButtons setType={setType} />
+      </Header>
       <Body type={type} setType={setType} />
     </div>
   );
 }
 
-function Header({ setType }) {
+function Header({ children }) {
   const [responsive, setResponsive] = useState(false);
   return (
     <header className="header">
       <nav>
-        <span className="logo">
-          <img
-            className="logo-img"
-            src="https://cdn.dribbble.com/users/2407143/screenshots/10717420/media/60aab191ea1165e667a9f2edd6375105.png"
-            alt="logo"
-          ></img>
-          Revenue Radar
-        </span>
-        <div
-          className={!responsive ? "types-header" : "types-header-responsive"}
-        >
-          <span
-            onClick={(e) => {
-              setType("sales");
-            }}
-          >
-            sales
-          </span>
-          <span
-            onClick={(e) => {
-              setType("purchase");
-            }}
-          >
-            purchase
-          </span>
-        </div>
+        {children}
         <span className="icon">
           <i
             className="fa-solid fa-bars"
@@ -100,6 +78,40 @@ function Header({ setType }) {
         </span>
       </nav>
     </header>
+  );
+}
+
+function Logo() {
+  return (
+    <span className="logo">
+      <img
+        className="logo-img"
+        src="https://cdn.dribbble.com/users/2407143/screenshots/10717420/media/60aab191ea1165e667a9f2edd6375105.png"
+        alt="logo"
+      ></img>
+      Revenue Radar
+    </span>
+  );
+}
+
+function ConversionButtons({ setType, responsive }) {
+  return (
+    <div className={!responsive ? "types-header" : "types-header-responsive"}>
+      <span
+        onClick={(e) => {
+          setType("sales");
+        }}
+      >
+        sales
+      </span>
+      <span
+        onClick={(e) => {
+          setType("purchase");
+        }}
+      >
+        purchase
+      </span>
+    </div>
   );
 }
 
@@ -196,12 +208,12 @@ function Form({ copyData, setCopyData, type, setType }) {
   return (
     <form className="form">
       <div>
-        <input
-          className="name"
-          placeholder="Name"
+        <Input
+          type={"text"}
+          placeholder={"Name"}
           value={username}
-          onChange={(e) => setName(e.target.value)}
-        ></input>
+          onChange={setName}
+        />
         <input
           type="date"
           className="name"
@@ -211,13 +223,12 @@ function Form({ copyData, setCopyData, type, setType }) {
             hanldeDateChange(e);
           }}
         ></input>
-        <input
-          type="number"
-          className="name"
-          placeholder="Amount "
+        <Input
+          type={"number"}
+          placeholder={"Amount"}
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        ></input>
+          onChange={setAmount}
+        />
         <select
           className="select-option"
           onChange={(e) => setType(e.target.value)}
@@ -236,6 +247,19 @@ function Form({ copyData, setCopyData, type, setType }) {
         </button>
       </div>
     </form>
+  );
+}
+
+function Input({ type, placeholder, value, onChange, min }) {
+  return (
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => {
+        onChange(e.target.value);
+      }}
+    ></input>
   );
 }
 
@@ -287,12 +311,12 @@ function DateBar({
           ))}
         </select>
       </div>
-      <div>
+      <div className="total-amount">
         <span className="status">
           {selectYear} : {sumyear}
         </span>
         <span className="status">
-          {selectMonth} {selectYear} : ${summonth}
+          {selectMonth} : ${summonth}
         </span>
       </div>
     </div>
